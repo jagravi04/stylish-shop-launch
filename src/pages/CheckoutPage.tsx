@@ -1,17 +1,15 @@
-
 import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { formatCurrency } from '@/lib/utils';
-import { useToast } from '@/components/ui/toast';
+import { toast } from '@/components/ui/sonner';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CreditCard } from 'lucide-react';
 
 export default function CheckoutPage() {
   const { cart, clearCart } = useCart();
-  const { toast } = useToast();
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
@@ -48,10 +46,8 @@ export default function CheckoutPage() {
       setIsLoading(false);
       
       // Show success toast
-      toast({
-        title: "Order Placed!",
-        description: "Your order has been successfully placed.",
-        variant: "default"
+      toast.success("Order Placed!", {
+        description: "Your order has been successfully placed."
       });
       
       // Clear cart and redirect to success page

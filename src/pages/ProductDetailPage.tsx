@@ -7,12 +7,11 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { formatCurrency } from '@/lib/utils';
 import { ShoppingCart, ArrowLeft } from 'lucide-react';
-import { useToast } from '@/components/ui/sonner';
+import { toast } from '@/components/ui/sonner';
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { addToCart } = useCart();
-  const toast = useToast();
   
   // Get product by id
   const product = getProductById(id || '');
@@ -28,6 +27,13 @@ export default function ProductDetailPage() {
       </div>
     );
   }
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    toast.success("Added to cart", {
+      description: `${product.name} has been added to your cart.`
+    });
+  };
   
   return (
     <div className="container mx-auto px-4 py-8">
@@ -72,7 +78,7 @@ export default function ProductDetailPage() {
           <Button 
             size="lg" 
             className="w-full md:w-auto"
-            onClick={() => addToCart(product)}
+            onClick={handleAddToCart}
           >
             <ShoppingCart className="mr-2 h-5 w-5" />
             Add to Cart
